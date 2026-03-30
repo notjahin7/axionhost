@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Reset | AxionHost</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Load Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.3/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.3/firebase-auth-compat.js"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Poppins', 'sans-serif'] },
+                    colors: { primary: '#8b5cf6', secondary: '#3b82f6' },
+                    animation: { 'blob': 'blob 7s infinite', },
+                    keyframes: { blob: { '0%': { transform: 'translate(0px, 0px) scale(1)' }, '33%': { transform: 'translate(30px, -50px) scale(1.1)' }, '66%': { transform: 'translate(-20px, 20px) scale(0.9)' }, '100%': { transform: 'translate(0px, 0px) scale(1)' }, } }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0a0a0f;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-primary selection:text-white relative flex items-center justify-center min-h-screen">
+
+    <!-- Ambient Background Glows (Matching Home Page Style) -->
+    <div class="fixed top-0 left-1/4 w-96 h-96 bg-primary/20 rounded-full mix-blend-screen filter blur-[128px] animate-blob z-[-1] pointer-events-none"></div>
+    <div class="fixed bottom-1/4 right-1/4 w-96 h-96 bg-secondary/20 rounded-full mix-blend-screen filter blur-[128px] animate-blob animation-delay-2000 z-[-1] pointer-events-none"></div>
+
+    <!-- RESET PASSWORD CONTAINER -->
+    <div class="w-full max-w-md p-6 z-10">
+        
+        <!-- Logo/Header (Matching Home Page Style) -->
+        <div class="text-center mb-10">
+            <div class="flex items-center justify-center gap-2 mb-3">
+                <i class="fa-solid fa-server text-primary text-3xl"></i>
+                <span class="font-bold text-3xl tracking-wider text-white">AXIONHOST</span>
+            </div>
+            <h1 class="text-3xl font-bold text-white">Password Reset</h1>
+            <p class="text-gray-400 mt-1">We'll send instructions to your registered email.</p>
+        </div>
+
+        <!-- RESET FORM CARD (Glassmorphism) -->
+        <div class="glass-panel p-8 rounded-2xl shadow-2xl">
+            
+            <form id="resetForm" class="space-y-6">
+                
+                <!-- Email Field -->
+                <div>
+                    <label for="reset_email" class="block text-sm font-medium text-gray-300 mb-2">Email Address</label>
+                    <div class="relative">
+                        <input type="email" id="reset_email" name="reset_email" class="w-full p-3 pl-10 rounded-lg glass-panel bg-white/5 border border-white/10 focus:ring-primary focus:border-primary text-white placeholder-gray-500 transition" placeholder="you@example.com" required>
+                        <i class="fa-solid fa-envelope absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div>
+                    <button type="submit" class="w-full py-3 rounded-lg bg-gradient-to-r from-primary to-secondary font-semibold text-white hover:scale-[1.02] transition-transform duration-300 shadow-xl shadow-primary/40">
+                        Send Reset Email
+                    </button>
+                </div>
+            </form>
+
+            <!-- Footer Links for Reset Page -->
+            <div class="mt-8 text-center text-sm">
+                <p class="text-gray-500">
+                    <a href="login.html" class="text-primary hover:text-white transition font-medium flex items-center justify-center gap-2"><i class="fa-solid fa-arrow-left text-xs"></i> Back to Login</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER (Minimal, matching home page style) -->
+    <footer class="border-t border-white/10 glass-panel absolute bottom-0 w-full z-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+                <p>&copy; 2024 AxionHost. All rights reserved.</p>
+                <div class="flex gap-4 mt-4 md:mt-0">
+                    <a href="privacy.html" class="hover:text-primary transition">Privacy</a>
+                    <a href="terms.html" class="hover:text-primary transition">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // --- FIREBASE INITIALIZATION ---
+        const firebaseConfig = {
+          apiKey: "AIzaSyB0vnpeHjD4Ym6Z7WrbjKFPtVsmHKPwO-s",
+          authDomain: "deshdomain.firebaseapp.com",
+          databaseURL: "https://deshdomain-default-rtdb.firebaseio.com",
+          projectId: "deshdomain",
+          storageBucket: "deshdomain.firebasestorage.app",
+          messagingSenderId: "250366935613",
+          appId: "1:250366935613:web:0d2d6e22a1fcd703a42054",
+          measurementId: "G-DJDXW9Q40E"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app); 
+
+        // --- Currency Logic (For Header Consistency) ---
+        const exchangeRates = { USD: { rate: 1, symbol: '$' }, INR: { rate: 83.50, symbol: '₹' }, BDT: { rate: 110.00, symbol: '৳' } };
+        function changeCurrency(currencyCode, symbol) {
+            document.getElementById('activeCurrency').innerText = `${currencyCode} (${symbol})`;
+            closeDropdowns();
+        }
+        
+        // Dropdown helpers
+        const currencyDropdown = document.getElementById('currencyDropdown');
+        function toggleDropdown(target) {
+            if(target.classList.contains('opacity-0')) { closeDropdowns(); target.classList.remove('opacity-0', 'invisible', 'translate-y-[-10px]'); target.classList.add('opacity-100', 'visible', 'translate-y-0'); } 
+            else { target.classList.add('opacity-0', 'invisible', 'translate-y-[-10px]'); target.classList.remove('opacity-100', 'visible', 'translate-y-0'); }
+        }
+        function closeDropdowns() {
+            [currencyDropdown].forEach(dropdown => {
+                dropdown.classList.add('opacity-0', 'invisible', 'translate-y-[-10px]');
+                dropdown.classList.remove('opacity-100', 'visible', 'translate-y-0');
+            });
+        }
+        document.getElementById('currencyBtn').addEventListener('click', (e) => { e.stopPropagation(); toggleDropdown(currencyDropdown); });
+        document.addEventListener('click', () => closeDropdowns());
+
+        // --- FIREBASE PASSWORD RESET HANDLER ---
+        document.getElementById('resetForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('reset_email').value;
+            
+            try {
+                await sendPasswordResetEmail(auth, email);
+                alert(`Password reset email successfully sent to ${email}. Please check your inbox!`);
+                window.location.href = 'login.html'; // Redirect back to login
+            } catch (error) {
+                alert("Password Reset Error: " + error.message);
+            }
+        });
+    </script>
+</body>
+</html>
