@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | AxionHost</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        background: '#0a0a0f',
+                        glass: 'rgba(255, 255, 255, 0.03)',
+                        glassBorder: 'rgba(255, 255, 255, 0.08)',
+                        primary: '#8b5cf6',
+                        secondary: '#3b82f6',
+                    },
+                    animation: {
+                        'blob': 'blob 7s infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0a0a0f;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-primary selection:text-white relative">
+
+    <!-- Ambient Background Glows -->
+    <div class="fixed top-0 left-1/4 w-96 h-96 bg-primary/20 rounded-full mix-blend-screen filter blur-[128px] animate-blob z-[-1] pointer-events-none"></div>
+    <div class="fixed top-1/4 right-1/4 w-96 h-96 bg-secondary/20 rounded-full mix-blend-screen filter blur-[128px] animate-blob animation-delay-2000 z-[-1] pointer-events-none"></div>
+
+    <!-- NAVBAR (Matched to Index.html) -->
+    <nav class="fixed w-full z-50 glass-panel border-b-0 border-white/5 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <a href="index.html" class="flex-shrink-0 flex items-center gap-2 cursor-pointer">
+                    <i class="fa-solid fa-server text-primary text-2xl"></i>
+                    <span class="font-bold text-2xl tracking-wider text-white">AXIONHOST</span>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-300 hover:text-white transition-colors">Home</a>
+                    <a href="games.html" class="text-gray-300 hover:text-white transition-colors">Games</a>
+                    <a href="about.html" class="text-gray-300 hover:text-white transition-colors">About Us</a>
+                    <a href="contact.html" class="text-white font-medium transition-colors">Contact</a>
+                </div>
+
+                <!-- Right Actions: Currency & 3-Dot Menu -->
+                <div class="flex items-center space-x-4 relative">
+                    <!-- Currency Switcher -->
+                    <div class="relative">
+                        <button id="currencyBtn" class="flex items-center gap-2 text-sm font-medium glass-panel px-4 py-2 rounded-lg hover:bg-white/5 transition">
+                            <span id="activeCurrency">USD ($)</span>
+                            <i class="fa-solid fa-chevron-down text-xs"></i>
+                        </button>
+                        <!-- Dropdown -->
+                        <div id="currencyDropdown" class="absolute right-0 mt-2 w-32 glass-panel rounded-lg shadow-xl opacity-0 invisible transition-all duration-200 transform translate-y-[-10px]">
+                            <ul class="py-2 text-sm">
+                                <li><a href="#" class="block px-4 py-2 hover:bg-primary/20 transition" onclick="changeCurrency('USD', '$')">USD ($)</a></li>
+                                <li><a href="#" class="block px-4 py-2 hover:bg-primary/20 transition" onclick="changeCurrency('INR', '₹')">INR (₹)</a></li>
+                                <li><a href="#" class="block px-4 py-2 hover:bg-primary/20 transition" onclick="changeCurrency('BDT', '৳')">BDT (৳)</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Three Dot Menu -->
+                    <div class="relative">
+                        <button id="optionsBtn" class="text-gray-300 hover:text-white p-2 transition">
+                            <i class="fa-solid fa-ellipsis-vertical text-xl"></i>
+                        </button>
+                        <div id="optionsDropdown" class="absolute right-0 mt-2 w-48 glass-panel rounded-lg shadow-xl opacity-0 invisible transition-all duration-200 transform translate-y-[-10px]">
+                            <ul class="py-2 text-sm">
+                                <li><a href="#" class="block px-4 py-2 hover:bg-white/10 transition"><i class="fa-solid fa-user mr-2 text-gray-400"></i> Client Area</a></li>
+                                <li><a href="#" class="block px-4 py-2 hover:bg-white/10 transition"><i class="fa-solid fa-headset mr-2 text-gray-400"></i> Support Ticket</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- PAGE CONTENT -->
+    <section class="pt-40 pb-20 relative z-10 px-4">
+        <div class="max-w-4xl mx-auto reveal">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
+                Get in Touch
+            </h1>
+            <p class="text-xl text-gray-400 mb-10">We are here to answer your technical questions or help with billing.</p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
+                <!-- Contact Info 1: Support -->
+                <div class="reveal glass-panel p-6 rounded-xl text-center border-l-4 border-primary">
+                    <i class="fa-solid fa-headset text-3xl text-primary mb-3"></i>
+                    <h3 class="font-semibold mb-1 text-white">24/7 Support</h3>
+                    <p class="text-sm text-gray-400">For hosting issues and technical queries.</p>
+                    <a href="#" class="mt-3 inline-block text-sm text-primary hover:text-white transition font-medium">Submit Ticket</a>
+                </div>
+
+                <!-- Contact Info 2: Sales -->
+                <div class="reveal glass-panel p-6 rounded-xl text-center border-l-4 border-secondary" style="transition-delay: 100ms;">
+                    <i class="fa-solid fa-envelope text-3xl text-secondary mb-3"></i>
+                    <h3 class="font-semibold mb-1 text-white">Sales Enquiries</h3>
+                    <p class="text-sm text-gray-400">For enterprise partnerships or bulk purchases.</p>
+                    <a href="mailto:sales@axionhost.com" class="mt-3 inline-block text-sm text-secondary hover:text-white transition font-medium">Email Sales</a>
+                </div>
+
+                <!-- Contact Info 3: Discord -->
+                <div class="reveal glass-panel p-6 rounded-xl text-center border-l-4 border-purple-400" style="transition-delay: 200ms;">
+                    <i class="fa-brands fa-discord text-3xl text-purple-400 mb-3"></i>
+                    <h3 class="font-semibold mb-1 text-white">Community Help</h3>
+                    <p class="text-sm text-gray-400">Instant connection with our community mods.</p>
+                    <a href="#" class="mt-3 inline-block text-sm text-purple-400 hover:text-white transition font-medium">Join Our Discord</a>
+                </div>
+            </div>
+
+            <!-- CONTACT FORM -->
+            <div class="glass-panel p-8 md:p-10 rounded-2xl reveal" style="transition-delay: 300ms;">
+                <h3 class="text-2xl font-bold mb-6 text-white">Send Us a Message</h3>
+                <form class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-300 mb-2">Your Name</label>
+                            <input type="text" id="name" name="name" class="w-full p-3 rounded-lg glass-panel bg-white/5 border border-white/10 focus:ring-primary focus:border-primary text-white placeholder-gray-500 transition" placeholder="Your Full Name" required>
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-300 mb-2">Your Email</label>
+                            <input type="email" id="email" name="email" class="w-full p-3 rounded-lg glass-panel bg-white/5 border border-white/10 focus:ring-primary focus:border-primary text-white placeholder-gray-500 transition" placeholder="you@example.com" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="subject" class="block text-sm font-medium text-gray-300 mb-2">Subject</label>
+                        <input type="text" id="subject" name="subject" class="w-full p-3 rounded-lg glass-panel bg-white/5 border border-white/10 focus:ring-primary focus:border-primary text-white placeholder-gray-500 transition" placeholder="Brief summary of your request" required>
+                    </div>
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-gray-300 mb-2">Message</label>
+                        <textarea id="message" name="message" rows="5" class="w-full p-3 rounded-lg glass-panel bg-white/5 border border-white/10 focus:ring-primary focus:border-primary text-white placeholder-gray-500 transition" placeholder="Describe your issue or question in detail..." required></textarea>
+                    </div>
+                    <button type="submit" class="w-full py-3 rounded-lg bg-gradient-to-r from-primary to-secondary font-semibold text-white hover:scale-[1.01] transition-transform duration-300 shadow-xl shadow-primary/30">
+                        Send Inquiry
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER (Matched to Index.html) -->
+    <footer class="border-t border-white/10 glass-panel mt-20 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="col-span-1 md:col-span-1">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i class="fa-solid fa-server text-primary text-xl"></i>
+                        <span class="font-bold text-xl tracking-wider text-white">AXIONHOST</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Next-generation server hosting for communities of all sizes. Built by gamers, for gamers.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fa-brands fa-discord text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fa-brands fa-twitter text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fa-brands fa-youtube text-xl"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Services</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="games.html" class="hover:text-primary transition">Minecraft Hosting</a></li>
+                        <li><a href="games.html" class="hover:text-primary transition">Palworld Hosting</a></li>
+                        <li><a href="games.html" class="hover:text-primary transition">Rust Hosting</a></li>
+                        <li><a href="#" class="hover:text-primary transition">Dedicated Servers</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Company</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="about.html" class="hover:text-primary transition">About Us</a></li>
+                        <li><a href="contact.html" class="hover:text-primary transition">Contact</a></li>
+                        <li><a href="#" class="hover:text-primary transition">Affiliates</a></li>
+                        <li><a href="#" class="hover:text-primary transition">Blog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Legal</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="terms.html" class="hover:text-primary transition">Terms of Service</a></li>
+                        <li><a href="privacy.html" class="hover:text-primary transition">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-primary transition">Refund Policy</a></li>
+                        <li><a href="#" class="hover:text-primary transition">SLA</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+                <p>&copy; 2024 AxionHost. All rights reserved.</p>
+                <div class="flex gap-4 mt-4 md:mt-0">
+                    <i class="fa-brands fa-cc-visa text-2xl"></i>
+                    <i class="fa-brands fa-cc-mastercard text-2xl"></i>
+                    <i class="fa-brands fa-cc-paypal text-2xl"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // Currency logic
+        const exchangeRates = { USD: { rate: 1, symbol: '$' }, INR: { rate: 83.50, symbol: '₹' }, BDT: { rate: 110.00, symbol: '৳' } };
+        function changeCurrency(currencyCode, symbol) {
+            document.getElementById('activeCurrency').innerText = `${currencyCode} (${symbol})`;
+            const rate = exchangeRates[currencyCode].rate;
+            const priceElements = document.querySelectorAll('.price-val');
+            priceElements.forEach(el => {
+                const basePrice = parseFloat(el.getAttribute('data-base'));
+                const convertedPrice = (basePrice * rate).toFixed(2);
+                el.style.opacity = '0';
+                setTimeout(() => {
+                    el.innerText = `${symbol}${convertedPrice}`;
+                    el.style.opacity = '1';
+                    el.style.transition = 'opacity 0.3s ease';
+                }, 150);
+            });
+            closeDropdowns();
+        }
+        
+        // Dropdown helpers
+        const currencyDropdown = document.getElementById('currencyDropdown');
+        const optionsDropdown = document.getElementById('optionsBtn').nextElementSibling;
+        function toggleDropdown(target) {
+            if(target.classList.contains('opacity-0')) { closeDropdowns(); target.classList.remove('opacity-0', 'invisible', 'translate-y-[-10px]'); target.classList.add('opacity-100', 'visible', 'translate-y-0'); } 
+            else { target.classList.add('opacity-0', 'invisible', 'translate-y-[-10px]'); target.classList.remove('opacity-100', 'visible', 'translate-y-0'); }
+        }
+        function closeDropdowns() {
+            [currencyDropdown, optionsDropdown].forEach(dropdown => {
+                dropdown.classList.add('opacity-0', 'invisible', 'translate-y-[-10px]');
+                dropdown.classList.remove('opacity-100', 'visible', 'translate-y-0');
+            });
+        }
+        document.getElementById('currencyBtn').addEventListener('click', (e) => { e.stopPropagation(); toggleDropdown(currencyDropdown); });
+        document.getElementById('optionsBtn').addEventListener('click', (e) => { e.stopPropagation(); toggleDropdown(optionsDropdown); });
+        document.addEventListener('click', () => closeDropdowns());
+
+        // Scroll Animations
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
+        revealElements.forEach(el => revealOnScroll.observe(el));
+
+        // Navbar blur
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) { nav.classList.add('bg-black/50', 'shadow-lg'); } 
+            else { nav.classList.remove('bg-black/50', 'shadow-lg'); }
+        });
+    </script>
+</body>
+</html>
