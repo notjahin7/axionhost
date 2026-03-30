@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Area | AxionHost</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        background: '#0a0a0f',
+                        glass: 'rgba(255, 255, 255, 0.03)',
+                        glassBorder: 'rgba(255, 255, 255, 0.08)',
+                        primary: '#8b5cf6',
+                        secondary: '#3b82f6',
+                    },
+                    animation: {
+                        'blob': 'blob 7s infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0a0a0f;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        /* Tab Content Transition */
+        .tab-content {
+            transition: opacity 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-primary selection:text-white relative flex items-center justify-center min-h-screen">
+
+    <!-- Ambient Background Glows -->
+    <div class="fixed top-0 left-1/4 w-96 h-96 bg-primary/20 rounded-full mix-blend-screen filter blur-[128px] animate-blob z-[-1] pointer-events-none"></div>
+    <div class="fixed bottom-1/4 right-1/4 w-96 h-96 bg-secondary/20 rounded-full mix-blend-screen filter blur-[128px] animate-blob animation-delay-2000 z-[-1] pointer-events-none"></div>
+
+    <!-- AUTH CONTAINER -->
+    <div class="w-full max-w-lg p-6 z-10">
+        
+        <!-- Logo/Header -->
+        <div class="text-center mb-10">
+            <div class="flex items-center justify-center gap-2 mb-3">
+                <i class="fa-solid fa-server text-primary text-3xl"></i>
+                <span class="font-bold text-3xl tracking-wider text-white">AXIONHOST</span>
+            </div>
+            <p class="text-gray-400 mt-1">Client Area Access</p>
+        </div>
+
+        <!-- AUTH TABS CARD -->
+        <div class="glass-panel p-6 md:p-10 rounded-2xl shadow-2xl">
+            
+            <!-- Tabs Navigation -->
+            <div class="flex border-b border-white/10 mb-6">
+                <button id="tabLogin" onclick="showTab('login')" class="flex-1 py-3 text-center font-semibold border-b-2 border-primary text-primary transition-colors">
+                    Login
+                </button>
+                <button id="tabRegister" onclick="showTab('register')" class="flex-1 py-3 text-center font-medium border-b-2 border-transparent text-gray-400 hover:text-white transition-colors">
+                    Register
+                </button>
+            </div>
+
+            <!-- Tab Content Container -->
+            <div id="tabContainer">
+                
+                <!-- LOGIN FORM -->
+                <div id="login" class="tab-content">
+                    <form class="space-y-5">
+                        <!-- Email Field -->
+                        <div>
+                            <label for="login_email" class="block text-sm font-medium text-gray-300 mb-2">Email Address</label>
+                            <div class="relative">
+                                <input type="email" id="login_email" name="login_email" class="w-full p-3 pl-10 rounded-lg glass-panel bg-white/5 border border-white/10 focus:ring-primary focus:border-primary text-white placeholder-gray-500 transition" placeholder="you@example.com" required>
+                                <i class="fa-solid fa-envelope absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
+                            </div>
+                        </div>
+
+                        <!-- Password Field -->
+                        <div>
+                            <label for="login_password" class="block text-sm font-medium text-gray-300 mb-2">Password</label>
+                            <div class="relative">
+                                <input type="password" id="login_password" name="login_password" class="w-full p-3 pl-10 rounded-lg glass-panel bg-white/5 border border-white/10 focus:ring-primary focus:border-primary text-white placeholder-gray-500 transition" placeholder="••••••••" required>
+                                <i class="fa-solid fa-lock absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
+                            </div>
+                        </div>
+
+                        <!-- Options -->
+                        <div class="flex items-center justify-between text-sm">
+                            <div class="flex items-center">
+                                <input id="login_remember_me" name="login_remember_me" type="checkbox" class="h-4 w-4 text-primary border-gray-600 rounded bg-white/5 focus:ring-primary">
+                                <label for="login_remember_me" class="ml-2 block text-gray-400">
+                                    Remember me
+                                </label>
+                            </div>
+                            <a href="#" class="text-primary hover:text-white transition font-medium">
+                                Forgot Password?
+                            </a>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div>
+                            <button type="submit" class="w-full py-3 rounded-lg bg-gradient-to-r from-primary to-secondary font-semibold text-white hover:scale-[1.02] transition-transform duration-300 shadow-xl shadow-primary/40">
+                                Sign In
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- REGISTER FORM (Hidden by default) -->
+                <div id="register" class="tab-content opacity-0 hidden">
+                    <form class="space-y-5">
+                        <!-- Username -->
+                        <div>
+                            <label for="reg_username" class="block text-sm font-medium text-gray-300 mb-2">Username</label>
+                            <div class="relative">
+                                <input type="text" id="reg_username" name="reg_username" class="w-full p-3 pl-10 rounded-lg glass-panel bg-white/5 border border-white/10 focus:ring-primary focus:border-primary text-white placeholder-gray-500 transition" placeholder="Your unique username" required>
+                                <i class="fa-solid fa-user absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
+                            </div>
+                        </div>
+                        <!-- Email Field -->
+                        <div>
+                            <label for="reg_email" class="block text-sm font-medium text-gray-300 mb-2">Email Address</label>
+                            <div class="relative">
+                                <input type="email" id="reg_email" name="reg_email" class="w-full p-3 pl-10 rounded-lg glass-panel bg-white/5 border border-white/10 focus:ring-primary focus:border-primary text-white placeholder-gray-500 transition" placeholder="you@example.com" required>
+                                <i class="fa-solid fa-envelope absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
+                            </div>
+                        </div>
+
+                        <!-- Password Field -->
+                        <div>
+                            <label for="reg_password" class="block text-sm font-medium text-gray-300 mb-2">Password</label>
+                            <div class="relative">
+                                <input type="password" id="reg_password" name="reg_password" class="w-full p-3 pl-10 rounded-lg glass-panel bg-white/5 border border-white/10 focus:ring-primary focus:border-primary text-white placeholder-gray-500 transition" placeholder="••••••••" required>
+                                <i class="fa-solid fa-lock absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div>
+                            <button type="submit" class="w-full py-3 rounded-lg bg-gradient-to-r from-secondary to-primary font-semibold text-white hover:scale-[1.02] transition-transform duration-300 shadow-xl shadow-secondary/40">
+                                Create Account
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+            
+            <!-- Back to Home Link -->
+            <div class="mt-8 text-center text-sm">
+                <a href="index.html" class="text-gray-500 hover:text-primary transition font-medium flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-arrow-left text-xs"></i> Back to Homepage
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT FOR TABS AND CURRENCY -->
+    <script>
+        // --- Currency Logic (Copied from Index) ---
+        const exchangeRates = { USD: { rate: 1, symbol: '$' }, INR: { rate: 83.50, symbol: '₹' }, BDT: { rate: 110.00, symbol: '৳' } };
+        function changeCurrency(currencyCode, symbol) {
+            document.getElementById('activeCurrency').innerText = `${currencyCode} (${symbol})`;
+            closeDropdowns();
+        }
+        
+        // Dropdown helpers
+        const currencyDropdown = document.getElementById('currencyDropdown');
+        const optionsDropdown = document.getElementById('optionsBtn').nextElementSibling;
+        function toggleDropdown(target) {
+            if(target.classList.contains('opacity-0')) { closeDropdowns(); target.classList.remove('opacity-0', 'invisible', 'translate-y-[-10px]'); target.classList.add('opacity-100', 'visible', 'translate-y-0'); } 
+            else { target.classList.add('opacity-0', 'invisible', 'translate-y-[-10px]'); target.classList.remove('opacity-100', 'visible', 'translate-y-0'); }
+        }
+        function closeDropdowns() {
+            [currencyDropdown, optionsDropdown].forEach(dropdown => {
+                dropdown.classList.add('opacity-0', 'invisible', 'translate-y-[-10px]');
+                dropdown.classList.remove('opacity-100', 'visible', 'translate-y-0');
+            });
+        }
+        document.getElementById('currencyBtn').addEventListener('click', (e) => { e.stopPropagation(); toggleDropdown(currencyDropdown); });
+        document.getElementById('optionsBtn').addEventListener('click', (e) => { e.stopPropagation(); toggleDropdown(optionsDropdown); });
+        document.addEventListener('click', () => closeDropdowns());
+
+        // --- TAB SWITCHING LOGIC ---
+        function showTab(tabId) {
+            const tabs = ['login', 'register'];
+            
+            // Hide all content and reset button styles
+            tabs.forEach(id => {
+                const content = document.getElementById(id);
+                const tabButton = document.getElementById(`tab${id.charAt(0).toUpperCase() + id.slice(1)}`);
+                
+                content.classList.add('opacity-0', 'hidden');
+                tabButton.classList.remove('border-primary', 'text-primary');
+                tabButton.classList.add('border-transparent', 'text-gray-400');
+            });
+
+            // Show selected content and set active button style
+            const activeContent = document.getElementById(tabId);
+            const activeButton = document.getElementById(`tab${tabId.charAt(0).toUpperCase() + tabId.slice(1)}`);
+            
+            activeContent.classList.remove('opacity-0', 'hidden');
+            activeButton.classList.add('border-primary', 'text-primary');
+            activeButton.classList.remove('border-transparent', 'text-gray-400');
+        }
+
+        // Initialize on load to show Login tab first
+        document.addEventListener('DOMContentLoaded', () => {
+            showTab('login');
+        });
+    </script>
+</body>
+</html>
