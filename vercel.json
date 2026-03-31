@@ -10,6 +10,7 @@
     { "source": "/Contact", "destination": "/contact.html" },
     { "source": "/Blog", "destination": "/blogs.html" },
     { "source": "/Affiliates", "destination": "/affiliates.html" },
+    { "source": "/Support", "destination": "/support.html" },
     { "source": "/RefundPolicy", "destination": "/refund.html" },
     { "source": "/Sla", "destination": "/sla.html" },
     { "source": "/AboutUs", "destination": "/about.html" }
