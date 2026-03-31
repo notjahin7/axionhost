@@ -1,9 +1,10 @@
 {
   "rewrites": [
-    { "source": "/login", "destination": "/login.html" },
-    { "source": "/services", "destination": "/service.html" },
-    { "source": "/blog", "destination": "/blogs.html" },
-    { "source": "/affiliates", "destination": "/affiliates.html" },
-    { "source": "/aboutus", "destination": "/about.html" }
+    { "source": "/Login", "destination": "/login.html" },
+    { "source": "/Register", "destination": "/register.html" },
+    { "source": "/Services", "destination": "/service.html" },
+    { "source": "/Blog", "destination": "/blogs.html" },
+    { "source": "/Affiliates", "destination": "/affiliates.html" },
+    { "source": "/AboutUs", "destination": "/about.html" }
   ]
 }
