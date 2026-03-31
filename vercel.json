@@ -1,18 +1,18 @@
 {
   "rewrites": [
-    { "source": "/Login", "destination": "/login.html" },
-    { "source": "/Register", "destination": "/register.html" },
-    { "source": "/ForgetPassword", "destination": "/reset.html" },
-    { "source": "/Services", "destination": "/service.html" },
-    { "source": "/PrivacyPolicy", "destination": "/privacy.html" },
-    { "source": "/Register", "destination": "/re.html" },
-    { "source": "/Knowledgebase", "destination": "/knowledgebase.html" },
-    { "source": "/Contact", "destination": "/contact.html" },
-    { "source": "/Blog", "destination": "/blogs.html" },
-    { "source": "/Affiliates", "destination": "/affiliates.html" },
-    { "source": "/Support", "destination": "/support.html" },
-    { "source": "/RefundPolicy", "destination": "/refund.html" },
-    { "source": "/Sla", "destination": "/sla.html" },
-    { "source": "/AboutUs", "destination": "/about.html" }
+    { "source": "/login", "destination": "/login.html" },
+    { "source": "/register", "destination": "/register.html" },
+    { "source": "/forgetpassword", "destination": "/reset.html" },
+    { "source": "/services", "destination": "/service.html" },
+    { "source": "/privacypolicy", "destination": "/privacy.html" },
+    { "source": "/register", "destination": "/re.html" },
+    { "source": "/knowledgebase", "destination": "/knowledgebase.html" },
+    { "source": "/contact", "destination": "/contact.html" },
+    { "source": "/blog", "destination": "/blogs.html" },
+    { "source": "/affiliates", "destination": "/affiliates.html" },
+    { "source": "/support", "destination": "/support.html" },
+    { "source": "/refundpolicy", "destination": "/refund.html" },
+    { "source": "/sla", "destination": "/sla.html" },
+    { "source": "/aboutus", "destination": "/about.html" }
   ]
 }
