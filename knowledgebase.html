@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledgebase | AxionHost</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        background: '#0a0a0f',
+                        glass: 'rgba(255, 255, 255, 0.03)',
+                        glassBorder: 'rgba(255, 255, 255, 0.08)',
+                        primary: '#8b5cf6',
+                        secondary: '#3b82f6',
+                    },
+                    animation: {
+                        'blob': 'blob 7s infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0a0a0f;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism Utilities */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* Scroll Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0f; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #8b5cf6; }
+    </style>
+</head>
+<body class="antialiased selection:bg-primary selection:text-white relative">
+
+    <!-- Ambient Background Glows (Matching Home Page) -->
+    <div class="fixed top-0 left-1/4 w-96 h-96 bg-primary/20 rounded-full mix-blend-screen filter blur-[128px] animate-blob z-[-1] pointer-events-none"></div>
+    <div class="fixed top-1/4 right-1/4 w-96 h-96 bg-secondary/20 rounded-full mix-blend-screen filter blur-[128px] animate-blob animation-delay-2000 z-[-1] pointer-events-none"></div>
+
+    <!-- NAVBAR (Exact match to Home Page) -->
+    <nav class="fixed w-full z-50 glass-panel border-b-0 border-white/5 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <a href="index.html" class="flex-shrink-0 flex items-center gap-2 cursor-pointer">
+                    <i class="fa-solid fa-server text-primary text-2xl"></i>
+                    <span class="font-bold text-2xl tracking-wider text-white">AXIONHOST</span>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-300 hover:text-white transition-colors">Home</a>
+                    <a href="games.html" class="text-gray-300 hover:text-white transition-colors">Games</a>
+                    <a href="about.html" class="text-gray-300 hover:text-white transition-colors">About Us</a>
+                    <a href="support.html" class="text-gray-300 hover:text-white transition-colors">Support</a>
+                </div>
+
+                <!-- Right Actions: Currency & 3-Dot Menu -->
+                <div class="flex items-center space-x-4 relative">
+                    <!-- Currency Switcher -->
+                    <div class="relative">
+                        <button id="currencyBtn" class="flex items-center gap-2 text-sm font-medium glass-panel px-4 py-2 rounded-lg hover:bg-white/5 transition">
+                            <span id="activeCurrency">USD ($)</span>
+                            <i class="fa-solid fa-chevron-down text-xs"></i>
+                        </button>
+                        <!-- Dropdown -->
+                        <div id="currencyDropdown" class="absolute right-0 mt-2 w-32 glass-panel rounded-lg shadow-xl opacity-0 invisible transition-all duration-200 transform translate-y-[-10px]">
+                            <ul class="py-2 text-sm">
+                                <li><a href="#" class="block px-4 py-2 hover:bg-primary/20 transition" onclick="changeCurrency('USD', '$')">USD ($)</a></li>
+                                <li><a href="#" class="block px-4 py-2 hover:bg-primary/20 transition" onclick="changeCurrency('INR', '₹')">INR (₹)</a></li>
+                                <li><a href="#" class="block px-4 py-2 hover:bg-primary/20 transition" onclick="changeCurrency('BDT', '৳')">BDT (৳)</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Three Dot Menu -->
+                    <div class="relative">
+                        <button id="optionsBtn" class="text-gray-300 hover:text-white p-2 transition">
+                            <i class="fa-solid fa-ellipsis-vertical text-xl"></i>
+                        </button>
+                        <div id="optionsDropdown" class="absolute right-0 mt-2 w-48 glass-panel rounded-lg shadow-xl opacity-0 invisible transition-all duration-200 transform translate-y-[-10px]">
+                            <ul class="py-2 text-sm">
+                                <li><a href="auth.html" class="block px-4 py-2 hover:bg-white/10 transition"><i class="fa-solid fa-user mr-2 text-gray-400"></i> Client Area</a></li>
+                                <li><a href="support.html" class="block px-4 py-2 hover:bg-white/10 transition"><i class="fa-solid fa-headset mr-2 text-gray-400"></i> Support Ticket</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HEADER & SEARCH -->
+    <section class="pt-40 pb-16 relative z-10 text-center px-4">
+        <div class="reveal max-w-3xl mx-auto">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 tracking-tight">
+                How can we <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">help?</span>
+            </h1>
+            <p class="text-lg text-gray-400 mb-10">
+                Search our knowledgebase for guides, tutorials, and troubleshooting tips.
+            </p>
+            
+            <!-- Search Bar -->
+            <div class="relative max-w-2xl mx-auto">
+                <input type="text" class="w-full p-4 pl-12 rounded-xl glass-panel bg-white/5 border border-white/10 focus:ring-primary focus:border-primary text-white placeholder-gray-500 transition text-lg shadow-[0_0_30px_rgba(0,0,0,0.5)]" placeholder="Search for 'how to install mods'...">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl"></i>
+                <button class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-primary hover:bg-primary/80 text-white px-6 py-2 rounded-lg font-medium transition">Search</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CATEGORIES GRID -->
+    <section class="py-10 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Category 1 -->
+                <a href="#" class="reveal glass-panel p-8 rounded-2xl hover:border-primary/50 transition-all duration-300 hover:-translate-y-2 group block">
+                    <div class="w-14 h-14 rounded-xl bg-primary/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-power-off text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-primary transition">Getting Started</h3>
+                    <p class="text-gray-400 text-sm mb-4">Basic guides on purchasing, accessing your panel, and your first server boot.</p>
+                    <span class="text-xs text-gray-500 font-medium">12 Articles</span>
+                </a>
+
+                <!-- Category 2 -->
+                <a href="#" class="reveal glass-panel p-8 rounded-2xl hover:border-secondary/50 transition-all duration-300 hover:-translate-y-2 group block" style="transition-delay: 100ms;">
+                    <div class="w-14 h-14 rounded-xl bg-secondary/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-gamepad text-secondary text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-secondary transition">Game Configurations</h3>
+                    <p class="text-gray-400 text-sm mb-4">Specific tutorials for Minecraft, Rust, Palworld, and other supported titles.</p>
+                    <span class="text-xs text-gray-500 font-medium">45 Articles</span>
+                </a>
+
+                <!-- Category 3 -->
+                <a href="#" class="reveal glass-panel p-8 rounded-2xl hover:border-purple-500/50 transition-all duration-300 hover:-translate-y-2 group block" style="transition-delay: 200ms;">
+                    <div class="w-14 h-14 rounded-xl bg-purple-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-puzzle-piece text-purple-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-purple-400 transition">Mods & Plugins</h3>
+                    <p class="text-gray-400 text-sm mb-4">Learn how to upload, install, and configure mods, modpacks, and server plugins.</p>
+                    <span class="text-xs text-gray-500 font-medium">28 Articles</span>
+                </a>
+
+                <!-- Category 4 -->
+                <a href="#" class="reveal glass-panel p-8 rounded-2xl hover:border-green-500/50 transition-all duration-300 hover:-translate-y-2 group block">
+                    <div class="w-14 h-14 rounded-xl bg-green-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-credit-card text-green-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-green-400 transition">Billing & Account</h3>
+                    <p class="text-gray-400 text-sm mb-4">Information regarding invoices, upgrades, downgrades, and payment methods.</p>
+                    <span class="text-xs text-gray-500 font-medium">15 Articles</span>
+                </a>
+
+                <!-- Category 5 -->
+                <a href="#" class="reveal glass-panel p-8 rounded-2xl hover:border-red-500/50 transition-all duration-300 hover:-translate-y-2 group block" style="transition-delay: 100ms;">
+                    <div class="w-14 h-14 rounded-xl bg-red-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-triangle-exclamation text-red-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-red-400 transition">Troubleshooting</h3>
+                    <p class="text-gray-400 text-sm mb-4">Solutions to common crash reports, connection timeouts, and lag issues.</p>
+                    <span class="text-xs text-gray-500 font-medium">32 Articles</span>
+                </a>
+
+                <!-- Category 6 -->
+                <a href="#" class="reveal glass-panel p-8 rounded-2xl hover:border-yellow-500/50 transition-all duration-300 hover:-translate-y-2 group block" style="transition-delay: 200ms;">
+                    <div class="w-14 h-14 rounded-xl bg-yellow-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-database text-yellow-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-yellow-400 transition">Database & FTP</h3>
+                    <p class="text-gray-400 text-sm mb-4">Guides on connecting via SFTP, managing MySQL databases, and taking backups.</p>
+                    <span class="text-xs text-gray-500 font-medium">18 Articles</span>
+                </a>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- POPULAR ARTICLES -->
+    <section class="py-16 relative z-10 mb-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-2xl font-bold mb-8 reveal border-b border-white/10 pb-4">Most Popular Articles</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 reveal" style="transition-delay: 100ms;">
+                <a href="#" class="glass-panel p-5 rounded-xl flex items-center justify-between hover:bg-white/5 transition group">
+                    <div class="flex items-center gap-4">
+                        <i class="fa-regular fa-file-lines text-primary text-xl"></i>
+                        <span class="font-medium text-gray-200 group-hover:text-white transition">How to connect to your server via SFTP</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-gray-600 group-hover:text-primary transition"></i>
+                </a>
+                
+                <a href="#" class="glass-panel p-5 rounded-xl flex items-center justify-between hover:bg-white/5 transition group">
+                    <div class="flex items-center gap-4">
+                        <i class="fa-regular fa-file-lines text-primary text-xl"></i>
+                        <span class="font-medium text-gray-200 group-hover:text-white transition">Installing a Custom Modpack (CurseForge)</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-gray-600 group-hover:text-primary transition"></i>
+                </a>
+
+                <a href="#" class="glass-panel p-5 rounded-xl flex items-center justify-between hover:bg-white/5 transition group">
+                    <div class="flex items-center gap-4">
+                        <i class="fa-regular fa-file-lines text-primary text-xl"></i>
+                        <span class="font-medium text-gray-200 group-hover:text-white transition">Upgrading your server RAM and CPU</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-gray-600 group-hover:text-primary transition"></i>
+                </a>
+
+                <a href="#" class="glass-panel p-5 rounded-xl flex items-center justify-between hover:bg-white/5 transition group">
+                    <div class="flex items-center gap-4">
+                        <i class="fa-regular fa-file-lines text-primary text-xl"></i>
+                        <span class="font-medium text-gray-200 group-hover:text-white transition">How to fix "Connection Timed Out" errors</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-gray-600 group-hover:text-primary transition"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER (Exact match to Home Page) -->
+    <footer class="border-t border-white/10 glass-panel mt-20 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="col-span-1 md:col-span-1">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i class="fa-solid fa-server text-primary text-xl"></i>
+                        <span class="font-bold text-xl tracking-wider text-white">AXIONHOST</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Next-generation server hosting for communities of all sizes. Built by gamers, for gamers.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fa-brands fa-discord text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fa-brands fa-twitter text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fa-brands fa-youtube text-xl"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Services</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="games.html" class="hover:text-primary transition">Minecraft Hosting</a></li>
+                        <li><a href="games.html" class="hover:text-primary transition">Palworld Hosting</a></li>
+                        <li><a href="games.html" class="hover:text-primary transition">Rust Hosting</a></li>
+                        <li><a href="#" class="hover:text-primary transition">Dedicated Servers</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Company</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="about.html" class="hover:text-primary transition">About Us</a></li>
+                        <li><a href="contact.html" class="hover:text-primary transition">Contact</a></li>
+                        <li><a href="affiliate.html" class="hover:text-primary transition">Affiliates</a></li>
+                        <li><a href="blog.html" class="hover:text-primary transition">Blog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Legal</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="terms.html" class="hover:text-primary transition">Terms of Service</a></li>
+                        <li><a href="privacy.html" class="hover:text-primary transition">Privacy Policy</a></li>
+                        <li><a href="refund.html" class="hover:text-primary transition">Refund Policy</a></li>
+                        <li><a href="sla.html" class="hover:text-primary transition">SLA</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+                <p>&copy; 2024 AxionHost. All rights reserved.</p>
+                <div class="flex gap-4 mt-4 md:mt-0">
+                    <i class="fa-brands fa-cc-visa text-2xl"></i>
+                    <i class="fa-brands fa-cc-mastercard text-2xl"></i>
+                    <i class="fa-brands fa-cc-paypal text-2xl"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT (Exact match to Home Page) -->
+    <script>
+        // --- Currency Logic ---
+        const exchangeRates = { USD: { rate: 1, symbol: '$' }, INR: { rate: 83.50, symbol: '₹' }, BDT: { rate: 110.00, symbol: '৳' } };
+        function changeCurrency(currencyCode, symbol) {
+            document.getElementById('activeCurrency').innerText = `${currencyCode} (${symbol})`;
+            closeDropdowns();
+        }
+
+        // --- Dropdown Toggles ---
+        const currencyDropdown = document.getElementById('currencyDropdown');
+        const optionsDropdown = document.getElementById('optionsDropdown');
+
+        function toggleDropdown(target) {
+            if(target.classList.contains('opacity-0')) {
+                closeDropdowns();
+                target.classList.remove('opacity-0', 'invisible', 'translate-y-[-10px]');
+                target.classList.add('opacity-100', 'visible', 'translate-y-0');
+            } else {
+                target.classList.add('opacity-0', 'invisible', 'translate-y-[-10px]');
+                target.classList.remove('opacity-100', 'visible', 'translate-y-0');
+            }
+        }
+
+        function closeDropdowns() {
+            [currencyDropdown, optionsDropdown].forEach(dropdown => {
+                dropdown.classList.add('opacity-0', 'invisible', 'translate-y-[-10px]');
+                dropdown.classList.remove('opacity-100', 'visible', 'translate-y-0');
+            });
+        }
+
+        document.getElementById('currencyBtn').addEventListener('click', (e) => { e.stopPropagation(); toggleDropdown(currencyDropdown); });
+        document.getElementById('optionsBtn').addEventListener('click', (e) => { e.stopPropagation(); toggleDropdown(optionsDropdown); });
+        document.addEventListener('click', () => closeDropdowns());
+
+        // --- Scroll Reveal Animations ---
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealOptions = { threshold: 0.15, rootMargin: "0px 0px -50px 0px" };
+
+        const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, revealOptions);
+
+        revealElements.forEach(el => revealOnScroll.observe(el));
+
+        // --- Navbar Blur effect on scroll ---
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) { nav.classList.add('bg-black/50', 'shadow-lg'); } 
+            else { nav.classList.remove('bg-black/50', 'shadow-lg'); }
+        });
+    </script>
+</body>
+</html>
