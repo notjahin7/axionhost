@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Services | AxionHost</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        background: '#0a0a0f',
+                        glass: 'rgba(255, 255, 255, 0.03)',
+                        glassBorder: 'rgba(255, 255, 255, 0.08)',
+                        primary: '#8b5cf6',
+                        secondary: '#3b82f6',
+                    },
+                    animation: {
+                        'blob': 'blob 7s infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0a0a0f;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism Utilities */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* Scroll Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0f; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #8b5cf6; }
+    </style>
+</head>
+<body class="antialiased selection:bg-primary selection:text-white relative">
+
+    <!-- Ambient Background Glows -->
+    <div class="fixed top-0 left-1/4 w-96 h-96 bg-primary/20 rounded-full mix-blend-screen filter blur-[128px] animate-blob z-[-1] pointer-events-none"></div>
+    <div class="fixed top-1/4 right-1/4 w-96 h-96 bg-secondary/20 rounded-full mix-blend-screen filter blur-[128px] animate-blob animation-delay-2000 z-[-1] pointer-events-none"></div>
+
+    <!-- NAVBAR (Exact Match to Home Page) -->
+    <nav class="fixed w-full z-50 glass-panel border-b-0 border-white/5 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <a href="index.html" class="flex-shrink-0 flex items-center gap-2 cursor-pointer">
+                    <i class="fa-solid fa-server text-primary text-2xl"></i>
+                    <span class="font-bold text-2xl tracking-wider text-white">AXIONHOST</span>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-300 hover:text-white transition-colors">Home</a>
+                    <a href="services.html" class="text-white font-medium transition-colors">Services</a>
+                    <a href="about.html" class="text-gray-300 hover:text-white transition-colors">About Us</a>
+                    <a href="support.html" class="text-gray-300 hover:text-white transition-colors">Support</a>
+                </div>
+
+                <!-- Right Actions: Currency & 3-Dot Menu -->
+                <div class="flex items-center space-x-4 relative">
+                    <!-- Currency Switcher -->
+                    <div class="relative">
+                        <button id="currencyBtn" class="flex items-center gap-2 text-sm font-medium glass-panel px-4 py-2 rounded-lg hover:bg-white/5 transition">
+                            <span id="activeCurrency">USD ($)</span>
+                            <i class="fa-solid fa-chevron-down text-xs"></i>
+                        </button>
+                        <!-- Dropdown -->
+                        <div id="currencyDropdown" class="absolute right-0 mt-2 w-32 glass-panel rounded-lg shadow-xl opacity-0 invisible transition-all duration-200 transform translate-y-[-10px]">
+                            <ul class="py-2 text-sm">
+                                <li><a href="#" class="block px-4 py-2 hover:bg-primary/20 transition" onclick="changeCurrency('USD', '$')">USD ($)</a></li>
+                                <li><a href="#" class="block px-4 py-2 hover:bg-primary/20 transition" onclick="changeCurrency('INR', '₹')">INR (₹)</a></li>
+                                <li><a href="#" class="block px-4 py-2 hover:bg-primary/20 transition" onclick="changeCurrency('BDT', '৳')">BDT (৳)</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Three Dot Menu -->
+                    <div class="relative">
+                        <button id="optionsBtn" class="text-gray-300 hover:text-white p-2 transition">
+                            <i class="fa-solid fa-ellipsis-vertical text-xl"></i>
+                        </button>
+                        <div id="optionsDropdown" class="absolute right-0 mt-2 w-48 glass-panel rounded-lg shadow-xl opacity-0 invisible transition-all duration-200 transform translate-y-[-10px]">
+                            <ul class="py-2 text-sm">
+                                <li><a href="auth.html" class="block px-4 py-2 hover:bg-white/10 transition"><i class="fa-solid fa-user mr-2 text-gray-400"></i> Client Area</a></li>
+                                <li><a href="support.html" class="block px-4 py-2 hover:bg-white/10 transition"><i class="fa-solid fa-headset mr-2 text-gray-400"></i> Support Ticket</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HEADER SECTION -->
+    <section class="pt-40 pb-12 relative z-10 text-center px-4">
+        <div class="reveal max-w-3xl mx-auto">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 tracking-tight">
+                High Performance <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Services</span>
+            </h1>
+            <p class="text-lg text-gray-400 mb-10">
+                Deploy enterprise-grade servers instantly. Scale your community seamlessly with our global NVMe edge network.
+            </p>
+        </div>
+    </section>
+
+    <!-- MINECRAFT PLANS (10 TOTAL) -->
+    <section class="py-12 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center gap-4 mb-10 reveal">
+                <i class="fa-solid fa-cubes text-3xl text-primary"></i>
+                <h2 class="text-3xl font-bold text-white">Minecraft Hosting</h2>
+            </div>
+
+            <!-- Grid for 10 Plans -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+                
+                <!-- Plan 1 -->
+                <div class="reveal glass-panel rounded-2xl p-6 border border-white/5 hover:border-primary/50 transition-all duration-300 hover:-translate-y-2 flex flex-col h-full">
+                    <h3 class="text-lg font-bold text-gray-300 mb-1">Coal</h3>
+                    <div class="text-3xl font-bold text-white mb-4">
+                        <span class="price-val" data-base="2.99">$2.99</span><span class="text-sm text-gray-500 font-normal">/mo</span>
+                    </div>
+                    <ul class="space-y-3 mb-6 text-sm text-gray-400 flex-grow">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-memory text-primary w-4"></i> 2 GB RAM</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-microchip text-primary w-4"></i> 1 Core CPU</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-hard-drive text-primary w-4"></i> 20 GB NVMe</li>
+                    </ul>
+                    <button class="w-full py-2 rounded-lg glass-panel hover:bg-white/10 transition-colors font-medium text-sm">Order Now</button>
+                </div>
+
+                <!-- Plan 2 -->
+                <div class="reveal glass-panel rounded-2xl p-6 border border-white/5 hover:border-primary/50 transition-all duration-300 hover:-translate-y-2 flex flex-col h-full" style="transition-delay: 50ms;">
+                    <h3 class="text-lg font-bold text-gray-300 mb-1">Iron</h3>
+                    <div class="text-3xl font-bold text-white mb-4">
+                        <span class="price-val" data-base="5.99">$5.99</span><span class="text-sm text-gray-500 font-normal">/mo</span>
+                    </div>
+                    <ul class="space-y-3 mb-6 text-sm text-gray-400 flex-grow">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-memory text-primary w-4"></i> 4 GB RAM</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-microchip text-primary w-4"></i> 2 Cores CPU</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-hard-drive text-primary w-4"></i> 40 GB NVMe</li>
+                    </ul>
+                    <button class="w-full py-2 rounded-lg glass-panel hover:bg-white/10 transition-colors font-medium text-sm">Order Now</button>
+                </div>
+
+                <!-- Plan 3 -->
+                <div class="reveal glass-panel rounded-2xl p-6 border border-white/5 hover:border-primary/50 transition-all duration-300 hover:-translate-y-2 flex flex-col h-full" style="transition-delay: 100ms;">
+                    <h3 class="text-lg font-bold text-gray-300 mb-1">Gold</h3>
+                    <div class="text-3xl font-bold text-white mb-4">
+                        <span class="price-val" data-base="8.99">$8.99</span><span class="text-sm text-gray-500 font-normal">/mo</span>
+                    </div>
+                    <ul class="space-y-3 mb-6 text-sm text-gray-400 flex-grow">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-memory text-primary w-4"></i> 6 GB RAM</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-microchip text-primary w-4"></i> 2 Cores CPU</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-hard-drive text-primary w-4"></i> 60 GB NVMe</li>
+                    </ul>
+                    <button class="w-full py-2 rounded-lg glass-panel hover:bg-white/10 transition-colors font-medium text-sm">Order Now</button>
+                </div>
+
+                <!-- Plan 4 -->
+                <div class="reveal glass-panel rounded-2xl p-6 border border-white/5 hover:border-primary/50 transition-all duration-300 hover:-translate-y-2 flex flex-col h-full" style="transition-delay: 150ms;">
+                    <h3 class="text-lg font-bold text-gray-300 mb-1">Lapis</h3>
+                    <div class="text-3xl font-bold text-white mb-4">
+                        <span class="price-val" data-base="11.99">$11.99</span><span class="text-sm text-gray-500 font-normal">/mo</span>
+                    </div>
+                    <ul class="space-y-3 mb-6 text-sm text-gray-400 flex-grow">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-memory text-primary w-4"></i> 8 GB RAM</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-microchip text-primary w-4"></i> 3 Cores CPU</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-hard-drive text-primary w-4"></i> 80 GB NVMe</li>
+                    </ul>
+                    <button class="w-full py-2 rounded-lg glass-panel hover:bg-white/10 transition-colors font-medium text-sm">Order Now</button>
+                </div>
+
+                <!-- Plan 5 -->
+                <div class="reveal glass-panel rounded-2xl p-6 border border-white/5 hover:border-primary/50 transition-all duration-300 hover:-translate-y-2 flex flex-col h-full" style="transition-delay: 200ms;">
+                    <h3 class="text-lg font-bold text-gray-300 mb-1">Redstone</h3>
+                    <div class="text-3xl font-bold text-white mb-4">
+                        <span class="price-val" data-base="14.99">$14.99</span><span class="text-sm text-gray-500 font-normal">/mo</span>
+                    </div>
+                    <ul class="space-y-3 mb-6 text-sm text-gray-400 flex-grow">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-memory text-primary w-4"></i> 10 GB RAM</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-microchip text-primary w-4"></i> 3 Cores CPU</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-hard-drive text-primary w-4"></i> 100 GB NVMe</li>
+                    </ul>
+                    <button class="w-full py-2 rounded-lg glass-panel hover:bg-white/10 transition-colors font-medium text-sm">Order Now</button>
+                </div>
+
+                <!-- Plan 6 (Most Popular Highlights) -->
+                <div class="reveal relative glass-panel rounded-2xl p-6 border border-primary shadow-[0_0_20px_rgba(139,92,246,0.15)] hover:shadow-[0_0_30px_rgba(139,92,246,0.3)] transition-all duration-300 hover:-translate-y-2 flex flex-col h-full bg-gradient-to-b from-primary/10 to-transparent xl:scale-105 xl:-translate-y-2 z-10" style="transition-delay: 50ms;">
+                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-primary to-secondary text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-lg whitespace-nowrap">
+                        MOST POPULAR
+                    </div>
+                    <h3 class="text-lg font-bold text-primary mb-1">Diamond</h3>
+                    <div class="text-3xl font-bold text-white mb-4">
+                        <span class="price-val" data-base="17.99">$17.99</span><span class="text-sm text-gray-500 font-normal">/mo</span>
+                    </div>
+                    <ul class="space-y-3 mb-6 text-sm text-gray-300 flex-grow">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-memory text-primary w-4"></i> 12 GB RAM</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-microchip text-primary w-4"></i> 4 Cores CPU</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-hard-drive text-primary w-4"></i> 120 GB NVMe</li>
+                    </ul>
+                    <button class="w-full py-2 rounded-lg bg-primary hover:bg-primary/80 transition-colors font-medium text-sm shadow-[0_0_15px_rgba(139,92,246,0.4)]">Order Now</button>
+                </div>
+
+                <!-- Plan 7 -->
+                <div class="reveal glass-panel rounded-2xl p-6 border border-white/5 hover:border-primary/50 transition-all duration-300 hover:-translate-y-2 flex flex-col h-full" style="transition-delay: 100ms;">
+                    <h3 class="text-lg font-bold text-gray-300 mb-1">Emerald</h3>
+                    <div class="text-3xl font-bold text-white mb-4">
+                        <span class="price-val" data-base="23.99">$23.99</span><span class="text-sm text-gray-500 font-normal">/mo</span>
+                    </div>
+                    <ul class="space-y-3 mb-6 text-sm text-gray-400 flex-grow">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-memory text-primary w-4"></i> 16 GB RAM</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-microchip text-primary w-4"></i> 4 Cores CPU</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-hard-drive text-primary w-4"></i> 160 GB NVMe</li>
+                    </ul>
+                    <button class="w-full py-2 rounded-lg glass-panel hover:bg-white/10 transition-colors font-medium text-sm">Order Now</button>
+                </div>
+
+                <!-- Plan 8 -->
+                <div class="reveal glass-panel rounded-2xl p-6 border border-white/5 hover:border-primary/50 transition-all duration-300 hover:-translate-y-2 flex flex-col h-full" style="transition-delay: 150ms;">
+                    <h3 class="text-lg font-bold text-gray-300 mb-1">Obsidian</h3>
+                    <div class="text-3xl font-bold text-white mb-4">
+                        <span class="price-val" data-base="29.99">$29.99</span><span class="text-sm text-gray-500 font-normal">/mo</span>
+                    </div>
+                    <ul class="space-y-3 mb-6 text-sm text-gray-400 flex-grow">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-memory text-primary w-4"></i> 20 GB RAM</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-microchip text-primary w-4"></i> 5 Cores CPU</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-hard-drive text-primary w-4"></i> 200 GB NVMe</li>
+                    </ul>
+                    <button class="w-full py-2 rounded-lg glass-panel hover:bg-white/10 transition-colors font-medium text-sm">Order Now</button>
+                </div>
+
+                <!-- Plan 9 -->
+                <div class="reveal glass-panel rounded-2xl p-6 border border-white/5 hover:border-primary/50 transition-all duration-300 hover:-translate-y-2 flex flex-col h-full" style="transition-delay: 200ms;">
+                    <h3 class="text-lg font-bold text-gray-300 mb-1">Netherite</h3>
+                    <div class="text-3xl font-bold text-white mb-4">
+                        <span class="price-val" data-base="35.99">$35.99</span><span class="text-sm text-gray-500 font-normal">/mo</span>
+                    </div>
+                    <ul class="space-y-3 mb-6 text-sm text-gray-400 flex-grow">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-memory text-primary w-4"></i> 24 GB RAM</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-microchip text-primary w-4"></i> 6 Cores CPU</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-hard-drive text-primary w-4"></i> 240 GB NVMe</li>
+                    </ul>
+                    <button class="w-full py-2 rounded-lg glass-panel hover:bg-white/10 transition-colors font-medium text-sm">Order Now</button>
+                </div>
+
+                <!-- Plan 10 -->
+                <div class="reveal glass-panel rounded-2xl p-6 border border-white/5 hover:border-primary/50 transition-all duration-300 hover:-translate-y-2 flex flex-col h-full" style="transition-delay: 250ms;">
+                    <h3 class="text-lg font-bold text-gray-300 mb-1">Dragon</h3>
+                    <div class="text-3xl font-bold text-white mb-4">
+                        <span class="price-val" data-base="45.99">$45.99</span><span class="text-sm text-gray-500 font-normal">/mo</span>
+                    </div>
+                    <ul class="space-y-3 mb-6 text-sm text-gray-400 flex-grow">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-memory text-primary w-4"></i> 32 GB RAM</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-microchip text-primary w-4"></i> 8 Cores CPU</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-hard-drive text-primary w-4"></i> 320 GB NVMe</li>
+                    </ul>
+                    <button class="w-full py-2 rounded-lg glass-panel hover:bg-white/10 transition-colors font-medium text-sm">Order Now</button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- COMING SOON SECTION (Bots & Node.js) -->
+    <section class="py-20 relative z-10 bg-black/40 border-t border-white/5 mt-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Expanding Our Infrastructure</h2>
+                <p class="text-gray-400">New hosting solutions dropping soon.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <!-- Bot Hosting -->
+                <div class="reveal relative glass-panel p-8 rounded-2xl overflow-hidden border border-white/10 group">
+                    <div class="absolute inset-0 bg-gradient-to-br from-secondary/10 to-transparent z-0 opacity-50"></div>
+                    
+                    <!-- Coming Soon Badge -->
+                    <div class="absolute top-6 right-6 bg-white/10 text-white text-xs font-bold px-3 py-1 rounded-full backdrop-blur-md border border-white/20 z-10">
+                        COMING SOON
+                    </div>
+                    
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 rounded-xl bg-secondary/20 flex items-center justify-center mb-6">
+                            <i class="fa-brands fa-discord text-secondary text-3xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-3">Bot Hosting</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                            Keep your Discord bots online 24/7. Perfect for Python (Discord.py) and JavaScript (Discord.js) frameworks with easy GitHub integration and automatic restarts.
+                        </p>
+                        <button disabled class="w-full sm:w-auto px-6 py-3 rounded-lg bg-white/5 border border-white/10 text-gray-500 font-medium cursor-not-allowed">
+                            Available Q3 2024
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Node.js Hosting -->
+                <div class="reveal relative glass-panel p-8 rounded-2xl overflow-hidden border border-white/10 group" style="transition-delay: 100ms;">
+                    <div class="absolute inset-0 bg-gradient-to-br from-green-500/10 to-transparent z-0 opacity-50"></div>
+                    
+                    <!-- Coming Soon Badge -->
+                    <div class="absolute top-6 right-6 bg-white/10 text-white text-xs font-bold px-3 py-1 rounded-full backdrop-blur-md border border-white/20 z-10">
+                        COMING SOON
+                    </div>
+                    
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 rounded-xl bg-green-500/20 flex items-center justify-center mb-6">
+                            <i class="fa-brands fa-node-js text-green-400 text-3xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-3">Node.js App Hosting</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                            Deploy full-stack web applications seamlessly. Access dedicated instances with npm pre-installed, custom domain routing, and automatic SSL certificates.
+                        </p>
+                        <button disabled class="w-full sm:w-auto px-6 py-3 rounded-lg bg-white/5 border border-white/10 text-gray-500 font-medium cursor-not-allowed">
+                            Available Q3 2024
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER (Exact Match to Home Page) -->
+    <footer class="border-t border-white/10 glass-panel mt-10 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="col-span-1 md:col-span-1">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i class="fa-solid fa-server text-primary text-xl"></i>
+                        <span class="font-bold text-xl tracking-wider text-white">AXIONHOST</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Next-generation server hosting for communities of all sizes. Built by gamers, for gamers.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fa-brands fa-discord text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fa-brands fa-twitter text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fa-brands fa-youtube text-xl"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Services</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="services.html" class="hover:text-primary transition">Minecraft Hosting</a></li>
+                        <li><a href="games.html" class="hover:text-primary transition">Palworld Hosting</a></li>
+                        <li><a href="games.html" class="hover:text-primary transition">Rust Hosting</a></li>
+                        <li><a href="#" class="hover:text-primary transition">Dedicated Servers</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Company</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="about.html" class="hover:text-primary transition">About Us</a></li>
+                        <li><a href="contact.html" class="hover:text-primary transition">Contact</a></li>
+                        <li><a href="affiliate.html" class="hover:text-primary transition">Affiliates</a></li>
+                        <li><a href="blog.html" class="hover:text-primary transition">Blog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Legal</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="terms.html" class="hover:text-primary transition">Terms of Service</a></li>
+                        <li><a href="privacy.html" class="hover:text-primary transition">Privacy Policy</a></li>
+                        <li><a href="refund.html" class="hover:text-primary transition">Refund Policy</a></li>
+                        <li><a href="sla.html" class="hover:text-primary transition">SLA</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+                <p>&copy; 2024 AxionHost. All rights reserved.</p>
+                <div class="flex gap-4 mt-4 md:mt-0">
+                    <i class="fa-brands fa-cc-visa text-2xl"></i>
+                    <i class="fa-brands fa-cc-mastercard text-2xl"></i>
+                    <i class="fa-brands fa-cc-paypal text-2xl"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // --- Currency Logic ---
+        const exchangeRates = { USD: { rate: 1, symbol: '$' }, INR: { rate: 83.50, symbol: '₹' }, BDT: { rate: 110.00, symbol: '৳' } };
+        function changeCurrency(currencyCode, symbol) {
+            document.getElementById('activeCurrency').innerText = `${currencyCode} (${symbol})`;
+            const rate = exchangeRates[currencyCode].rate;
+            const priceElements = document.querySelectorAll('.price-val');
+            priceElements.forEach(el => {
+                const basePrice = parseFloat(el.getAttribute('data-base'));
+                const convertedPrice = (basePrice * rate).toFixed(2);
+                el.style.opacity = '0';
+                setTimeout(() => {
+                    el.innerText = `${symbol}${convertedPrice}`;
+                    el.style.opacity = '1';
+                    el.style.transition = 'opacity 0.3s ease';
+                }, 150);
+            });
+            closeDropdowns();
+        }
+
+        // --- Dropdown Toggles ---
+        const currencyDropdown = document.getElementById('currencyDropdown');
+        const optionsDropdown = document.getElementById('optionsDropdown');
+
+        function toggleDropdown(target) {
+            if(target.classList.contains('opacity-0')) {
+                closeDropdowns();
+                target.classList.remove('opacity-0', 'invisible', 'translate-y-[-10px]');
+                target.classList.add('opacity-100', 'visible', 'translate-y-0');
+            } else {
+                target.classList.add('opacity-0', 'invisible', 'translate-y-[-10px]');
+                target.classList.remove('opacity-100', 'visible', 'translate-y-0');
+            }
+        }
+
+        function closeDropdowns() {
+            if(currencyDropdown) {
+                currencyDropdown.classList.add('opacity-0', 'invisible', 'translate-y-[-10px]');
+                currencyDropdown.classList.remove('opacity-100', 'visible', 'translate-y-0');
+            }
+            if(optionsDropdown) {
+                optionsDropdown.classList.add('opacity-0', 'invisible', 'translate-y-[-10px]');
+                optionsDropdown.classList.remove('opacity-100', 'visible', 'translate-y-0');
+            }
+        }
+
+        document.getElementById('currencyBtn').addEventListener('click', (e) => { e.stopPropagation(); toggleDropdown(currencyDropdown); });
+        
+        // Only add listener if 3-dot menu exists
+        const optBtn = document.getElementById('optionsBtn');
+        if(optBtn) {
+            optBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleDropdown(optionsDropdown); });
+        }
+        
+        document.addEventListener('click', () => closeDropdowns());
+
+        // --- Scroll Reveal Animations ---
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealOptions = { threshold: 0.15, rootMargin: "0px 0px -50px 0px" };
+
+        const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, revealOptions);
+
+        revealElements.forEach(el => revealOnScroll.observe(el));
+
+        // --- Navbar Blur effect on scroll ---
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) { nav.classList.add('bg-black/50', 'shadow-lg'); } 
+            else { nav.classList.remove('bg-black/50', 'shadow-lg'); }
+        });
+    </script>
+</body>
+</html>
