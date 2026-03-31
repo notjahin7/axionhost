@@ -2,6 +2,8 @@
   "rewrites": [
     { "source": "/login", "destination": "/login.html" },
     { "source": "/services", "destination": "/service.html" },
-    { "source": "/about", "destination": "/about.html" }
+    { "source": "/blog", "destination": "/blogs.html" },
+    { "source": "/affiliates", "destination": "/affiliates.html" },
+    { "source": "/aboutus", "destination": "/about.html" }
   ]
 }
