@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support | AxionHost</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        background: '#0a0a0f',
+                        glass: 'rgba(255, 255, 255, 0.03)',
+                        glassBorder: 'rgba(255, 255, 255, 0.08)',
+                        primary: '#8b5cf6',
+                        secondary: '#3b82f6',
+                    },
+                    animation: {
+                        'blob': 'blob 7s infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0a0a0f;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism Utilities */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* Scroll Animations (Exact match to Home Page) */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0f; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #8b5cf6; }
+    </style>
+</head>
+<body class="antialiased selection:bg-primary selection:text-white relative">
+
+    <!-- Ambient Background Glows (Exact match to Home Page) -->
+    <div class="fixed top-0 left-1/4 w-96 h-96 bg-primary/20 rounded-full mix-blend-screen filter blur-[128px] animate-blob z-[-1] pointer-events-none"></div>
+    <div class="fixed top-1/4 right-1/4 w-96 h-96 bg-secondary/20 rounded-full mix-blend-screen filter blur-[128px] animate-blob animation-delay-2000 z-[-1] pointer-events-none"></div>
+
+    <!-- NAVBAR (Exact match to Home Page) -->
+    <nav class="fixed w-full z-50 glass-panel border-b-0 border-white/5 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <a href="index.html" class="flex-shrink-0 flex items-center gap-2 cursor-pointer">
+                    <i class="fa-solid fa-server text-primary text-2xl"></i>
+                    <span class="font-bold text-2xl tracking-wider text-white">AXIONHOST</span>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-300 hover:text-white transition-colors">Home</a>
+                    <a href="games.html" class="text-gray-300 hover:text-white transition-colors">Games</a>
+                    <a href="about.html" class="text-gray-300 hover:text-white transition-colors">About Us</a>
+                    <a href="support.html" class="text-white font-medium transition-colors">Support</a>
+                </div>
+
+                <!-- Right Actions: Currency & 3-Dot Menu -->
+                <div class="flex items-center space-x-4 relative">
+                    <!-- Currency Switcher -->
+                    <div class="relative">
+                        <button id="currencyBtn" class="flex items-center gap-2 text-sm font-medium glass-panel px-4 py-2 rounded-lg hover:bg-white/5 transition">
+                            <span id="activeCurrency">USD ($)</span>
+                            <i class="fa-solid fa-chevron-down text-xs"></i>
+                        </button>
+                        <!-- Dropdown -->
+                        <div id="currencyDropdown" class="absolute right-0 mt-2 w-32 glass-panel rounded-lg shadow-xl opacity-0 invisible transition-all duration-200 transform translate-y-[-10px]">
+                            <ul class="py-2 text-sm">
+                                <li><a href="#" class="block px-4 py-2 hover:bg-primary/20 transition" onclick="changeCurrency('USD', '$')">USD ($)</a></li>
+                                <li><a href="#" class="block px-4 py-2 hover:bg-primary/20 transition" onclick="changeCurrency('INR', '₹')">INR (₹)</a></li>
+                                <li><a href="#" class="block px-4 py-2 hover:bg-primary/20 transition" onclick="changeCurrency('BDT', '৳')">BDT (৳)</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Three Dot Menu -->
+                    <div class="relative">
+                        <button id="optionsBtn" class="text-gray-300 hover:text-white p-2 transition">
+                            <i class="fa-solid fa-ellipsis-vertical text-xl"></i>
+                        </button>
+                        <div id="optionsDropdown" class="absolute right-0 mt-2 w-48 glass-panel rounded-lg shadow-xl opacity-0 invisible transition-all duration-200 transform translate-y-[-10px]">
+                            <ul class="py-2 text-sm">
+                                <li><a href="auth.html" class="block px-4 py-2 hover:bg-white/10 transition"><i class="fa-solid fa-user mr-2 text-gray-400"></i> Client Area</a></li>
+                                <li><a href="support.html" class="block px-4 py-2 hover:bg-white/10 transition"><i class="fa-solid fa-headset mr-2 text-gray-400"></i> Support Ticket</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- SUPPORT HEADER -->
+    <section class="pt-40 pb-10 relative z-10 text-center px-4">
+        <div class="reveal max-w-3xl mx-auto">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 tracking-tight">
+                How can we <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">help you?</span>
+            </h1>
+            <p class="text-lg text-gray-400">
+                Submit a support ticket and our 24/7 team will get back to you within 15 minutes.
+            </p>
+        </div>
+    </section>
+
+    <!-- SUPPORT TICKET FORM SECTION -->
+    <section class="py-10 relative z-10 mb-20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="reveal glass-panel p-8 md:p-10 rounded-2xl shadow-[0_0_30px_rgba(0,0,0,0.5)] border border-white/5">
+                
+                <form id="supportForm" class="space-y-6">
+                    <!-- Row 1: Name & Email -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Your Name</label>
+                            <div class="relative">
+                                <input type="text" class="w-full p-3 pl-10 rounded-lg glass-panel bg-white/5 border border-white/10 focus:ring-primary focus:border-primary text-white placeholder-gray-500 transition" placeholder="John Doe" required>
+                                <i class="fa-solid fa-user absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Email Address</label>
+                            <div class="relative">
+                                <input type="email" class="w-full p-3 pl-10 rounded-lg glass-panel bg-white/5 border border-white/10 focus:ring-primary focus:border-primary text-white placeholder-gray-500 transition" placeholder="you@example.com" required>
+                                <i class="fa-solid fa-envelope absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Row 2: Department & Priority -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Department</label>
+                            <div class="relative">
+                                <select class="w-full p-3 pl-10 rounded-lg glass-panel bg-[#15151e] border border-white/10 focus:ring-primary focus:border-primary text-white appearance-none transition" required>
+                                    <option value="" disabled selected>Select a Department</option>
+                                    <option value="technical">Technical Support</option>
+                                    <option value="billing">Billing & Sales</option>
+                                    <option value="abuse">Report Abuse</option>
+                                </select>
+                                <i class="fa-solid fa-building absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
+                                <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-xs"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Priority Level</label>
+                            <div class="relative">
+                                <select class="w-full p-3 pl-10 rounded-lg glass-panel bg-[#15151e] border border-white/10 focus:ring-primary focus:border-primary text-white appearance-none transition" required>
+                                    <option value="low">Low (General Query)</option>
+                                    <option value="medium" selected>Medium (Standard Support)</option>
+                                    <option value="high">High (Server Offline)</option>
+                                </select>
+                                <i class="fa-solid fa-flag absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
+                                <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-xs"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Subject -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Subject</label>
+                        <input type="text" class="w-full p-3 rounded-lg glass-panel bg-white/5 border border-white/10 focus:ring-primary focus:border-primary text-white placeholder-gray-500 transition" placeholder="Brief summary of your issue" required>
+                    </div>
+
+                    <!-- Message Body -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Detailed Message</label>
+                        <textarea rows="6" class="w-full p-3 rounded-lg glass-panel bg-white/5 border border-white/10 focus:ring-primary focus:border-primary text-white placeholder-gray-500 transition" placeholder="Please provide as much detail as possible, including server IDs or error codes..." required></textarea>
+                    </div>
+
+                    <!-- Submit Button (Matches Home Page Hero Button) -->
+                    <div class="pt-2">
+                        <button type="submit" class="w-full py-4 rounded-lg bg-gradient-to-r from-primary to-secondary font-semibold text-white shadow-[0_0_20px_rgba(139,92,246,0.4)] hover:shadow-[0_0_30px_rgba(139,92,246,0.6)] hover:scale-[1.01] transition-all duration-300">
+                            Submit Support Ticket
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER (Exact match to Home Page) -->
+    <footer class="border-t border-white/10 glass-panel mt-20 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="col-span-1 md:col-span-1">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i class="fa-solid fa-server text-primary text-xl"></i>
+                        <span class="font-bold text-xl tracking-wider text-white">AXIONHOST</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Next-generation server hosting for communities of all sizes. Built by gamers, for gamers.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fa-brands fa-discord text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fa-brands fa-twitter text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fa-brands fa-youtube text-xl"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Services</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="games.html" class="hover:text-primary transition">Minecraft Hosting</a></li>
+                        <li><a href="games.html" class="hover:text-primary transition">Palworld Hosting</a></li>
+                        <li><a href="games.html" class="hover:text-primary transition">Rust Hosting</a></li>
+                        <li><a href="#" class="hover:text-primary transition">Dedicated Servers</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Company</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="about.html" class="hover:text-primary transition">About Us</a></li>
+                        <li><a href="contact.html" class="hover:text-primary transition">Contact</a></li>
+                        <li><a href="affiliate.html" class="hover:text-primary transition">Affiliates</a></li>
+                        <li><a href="blog.html" class="hover:text-primary transition">Blog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Legal</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="terms.html" class="hover:text-primary transition">Terms of Service</a></li>
+                        <li><a href="privacy.html" class="hover:text-primary transition">Privacy Policy</a></li>
+                        <li><a href="refund.html" class="hover:text-primary transition">Refund Policy</a></li>
+                        <li><a href="sla.html" class="hover:text-primary transition">SLA</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+                <p>&copy; 2024 AxionHost. All rights reserved.</p>
+                <div class="flex gap-4 mt-4 md:mt-0">
+                    <i class="fa-brands fa-cc-visa text-2xl"></i>
+                    <i class="fa-brands fa-cc-mastercard text-2xl"></i>
+                    <i class="fa-brands fa-cc-paypal text-2xl"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT (Exact match to Home Page) -->
+    <script>
+        // --- Currency Logic ---
+        const exchangeRates = { USD: { rate: 1, symbol: '$' }, INR: { rate: 83.50, symbol: '₹' }, BDT: { rate: 110.00, symbol: '৳' } };
+        function changeCurrency(currencyCode, symbol) {
+            document.getElementById('activeCurrency').innerText = `${currencyCode} (${symbol})`;
+            closeDropdowns();
+        }
+
+        // --- Dropdown Toggles ---
+        const currencyDropdown = document.getElementById('currencyDropdown');
+        const optionsDropdown = document.getElementById('optionsDropdown');
+
+        function toggleDropdown(target) {
+            if(target.classList.contains('opacity-0')) {
+                closeDropdowns();
+                target.classList.remove('opacity-0', 'invisible', 'translate-y-[-10px]');
+                target.classList.add('opacity-100', 'visible', 'translate-y-0');
+            } else {
+                target.classList.add('opacity-0', 'invisible', 'translate-y-[-10px]');
+                target.classList.remove('opacity-100', 'visible', 'translate-y-0');
+            }
+        }
+
+        function closeDropdowns() {
+            [currencyDropdown, optionsDropdown].forEach(dropdown => {
+                dropdown.classList.add('opacity-0', 'invisible', 'translate-y-[-10px]');
+                dropdown.classList.remove('opacity-100', 'visible', 'translate-y-0');
+            });
+        }
+
+        document.getElementById('currencyBtn').addEventListener('click', (e) => { e.stopPropagation(); toggleDropdown(currencyDropdown); });
+        document.getElementById('optionsBtn').addEventListener('click', (e) => { e.stopPropagation(); toggleDropdown(optionsDropdown); });
+        document.addEventListener('click', () => closeDropdowns());
+
+        // --- Form Submit Handler ---
+        document.getElementById('supportForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert("Your support ticket has been successfully submitted! We will email you shortly.");
+        });
+
+        // --- Scroll Reveal Animations ---
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealOptions = { threshold: 0.15, rootMargin: "0px 0px -50px 0px" };
+
+        const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, revealOptions);
+
+        revealElements.forEach(el => revealOnScroll.observe(el));
+
+        // --- Navbar Blur effect on scroll ---
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) { nav.classList.add('bg-black/50', 'shadow-lg'); } 
+            else { nav.classList.remove('bg-black/50', 'shadow-lg'); }
+        });
+    </script>
+</body>
+</html>
