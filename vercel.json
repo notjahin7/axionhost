@@ -5,7 +5,6 @@
     { "source": "/forgetpassword", "destination": "/reset.html" },
     { "source": "/services", "destination": "/service.html" },
     { "source": "/privacypolicy", "destination": "/privacy.html" },
-    { "source": "/register", "destination": "/register.html" },
     { "source": "/knowledgebase", "destination": "/knowledgebase.html" },
     { "source": "/termsofservice", "destination": "/terms.html" },
     { "source": "/contact", "destination": "/contact.html" },
@@ -14,6 +13,7 @@
     { "source": "/support", "destination": "/support.html" },
     { "source": "/refundpolicy", "destination": "/refund.html" },
     { "source": "/sla", "destination": "/sla.html" },
-    { "source": "/aboutus", "destination": "/about.html" }
+    { "source": "/aboutus", "destination": "/about.html" },
+    { "source": "/(.*)", "destination": "/404.html" }
   ]
 }
